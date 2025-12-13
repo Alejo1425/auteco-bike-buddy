@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # Instancia para Juan
+  auteco-juan:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_ASESOR_ID: juan
+    container_name: auteco-juan
+    restart: unless-stopped
+    networks:
+      - traefik_proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.auteco-juan.rule=Host(`juan.autorunai.tech`)"
+      - "traefik.http.routers.auteco-juan.entrypoints=websecure"
+      - "traefik.http.routers.auteco-juan.tls=true"
+      - "traefik.http.routers.auteco-juan.tls.certresolver=letsencrypt"
+      - "traefik.http.services.auteco-juan.loadbalancer.server.port=80"
+      # Redirección HTTP a HTTPS
+      - "traefik.http.routers.auteco-juan-http.rule=Host(`juan.autorunai.tech`)"
+      - "traefik.http.routers.auteco-juan-http.entrypoints=web"
+      - "traefik.http.routers.auteco-juan-http.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+
+  # Instancia para María
+  auteco-maria:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_ASESOR_ID: maria
+    container_name: auteco-maria
+    restart: unless-stopped
+    networks:
+      - traefik_proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.auteco-maria.rule=Host(`maria.autorunai.tech`)"
+      - "traefik.http.routers.auteco-maria.entrypoints=websecure"
+      - "traefik.http.routers.auteco-maria.tls=true"
+      - "traefik.http.routers.auteco-maria.tls.certresolver=letsencrypt"
+      - "traefik.http.services.auteco-maria.loadbalancer.server.port=80"
+      # Redirección HTTP a HTTPS
+      - "traefik.http.routers.auteco-maria-http.rule=Host(`maria.autorunai.tech`)"
+      - "traefik.http.routers.auteco-maria-http.entrypoints=web"
+      - "traefik.http.routers.auteco-maria-http.middlewares=redirect-to-https"
+
+  # Instancia por defecto (opcional)
+  auteco-default:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_ASESOR_ID: default
+    container_name: auteco-default
+    restart: unless-stopped
+    networks:
+      - traefik_proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.auteco-default.rule=Host(`autorunai.tech`, `www.autorunai.tech`)"
+      - "traefik.http.routers.auteco-default.entrypoints=websecure"
+      - "traefik.http.routers.auteco-default.tls=true"
+      - "traefik.http.routers.auteco-default.tls.certresolver=letsencrypt"
+      - "traefik.http.services.auteco-default.loadbalancer.server.port=80"
+      # Redirección HTTP a HTTPS
+      - "traefik.http.routers.auteco-default-http.rule=Host(`autorunai.tech`, `www.autorunai.tech`)"
+      - "traefik.http.routers.auteco-default-http.entrypoints=web"
+      - "traefik.http.routers.auteco-default-http.middlewares=redirect-to-https"
+
+networks:
+  traefik_proxy:
+    external: true
