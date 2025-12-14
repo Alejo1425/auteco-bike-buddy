@@ -51,7 +51,7 @@ chmod +x deploy.sh
 ### Opción 2: Despliegue Manual
 
 ```bash
-# En tu servidor (82.25.84.168)
+# En tu servidor (xx.xx.xx.xxx)
 cd /opt
 git clone https://github.com/TU_USUARIO/auteco-bike-buddy.git
 cd auteco-bike-buddy
@@ -116,7 +116,7 @@ auteco-pedro:
 ```
 
 3. **Configurar DNS**:
-   - Crear registro A: `pedro.autorunai.tech` → `82.25.84.168`
+   - Crear registro A: `pedro.autorunai.tech` → `xx.xx.xx.xxx`
 
 4. **Desplegar**:
 
