@@ -23,7 +23,7 @@ Sistema de catálogo de motos Auteco con soporte multi-tenant para múltiples as
 ```bash
 # Clonar repositorio
 git clone https://github.com/TU_USUARIO/catalogo-serviautec-concesionario.git
-cd auteco-bike-buddy
+cd catalogo-serviautec-concesionario
 
 # Instalar dependencias
 npm install
