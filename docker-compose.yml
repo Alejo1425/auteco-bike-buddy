@@ -1,7 +1,11 @@
 version: '3.8'
 
 services:
-  # Instancia para Juan (Asesor real)
+  # ========================================
+  # PRODUCCIÓN (rama master)
+  # ========================================
+
+  # Instancia para Juan (Producción)
   auteco-juan:
     build:
       context: .
@@ -21,7 +25,7 @@ services:
       - "traefik.http.routers.auteco-juan.tls.certresolver=mytlschallenge"
       - "traefik.http.services.auteco-juan.loadbalancer.server.port=80"
 
-  # Instancia por defecto
+  # Instancia por defecto (Producción)
   auteco-default:
     build:
       context: .
@@ -40,6 +44,50 @@ services:
       - "traefik.http.routers.auteco-default.tls=true"
       - "traefik.http.routers.auteco-default.tls.certresolver=mytlschallenge"
       - "traefik.http.services.auteco-default.loadbalancer.server.port=80"
+
+  # ========================================
+  # STAGING (rama develop)
+  # ========================================
+
+  # Instancia para Juan (Staging)
+  auteco-staging-juan:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_ASESOR_ID: juan
+    container_name: auteco-staging-juan
+    restart: unless-stopped
+    networks:
+      - traefik_proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.http.routers.auteco-staging-juan.rule=Host(`staging-juan.autorunai.tech`)"
+      - "traefik.http.routers.auteco-staging-juan.entrypoints=websecure"
+      - "traefik.http.routers.auteco-staging-juan.tls=true"
+      - "traefik.http.routers.auteco-staging-juan.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.auteco-staging-juan.loadbalancer.server.port=80"
+
+  # Instancia por defecto (Staging)
+  auteco-staging-default:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_ASESOR_ID: default
+    container_name: auteco-staging-default
+    restart: unless-stopped
+    networks:
+      - traefik_proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.http.routers.auteco-staging-default.rule=Host(`staging.autorunai.tech`)"
+      - "traefik.http.routers.auteco-staging-default.entrypoints=websecure"
+      - "traefik.http.routers.auteco-staging-default.tls=true"
+      - "traefik.http.routers.auteco-staging-default.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.auteco-staging-default.loadbalancer.server.port=80"
 
 networks:
   traefik_proxy:
