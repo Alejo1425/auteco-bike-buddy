@@ -50,13 +50,13 @@ services:
   # Solo 1 instancia para pruebas
   # ========================================
 
-  # Instancia de staging (default)
+  # Instancia de staging
   auteco-staging:
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        VITE_ASESOR_ID: default
+        VITE_ASESOR_ID: staging
     container_name: auteco-staging
     restart: unless-stopped
     networks:
