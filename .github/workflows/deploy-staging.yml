@@ -28,9 +28,9 @@ jobs:
             git checkout develop
             git pull origin develop
 
-            # Rebuild and restart staging containers
-            docker-compose build --no-cache auteco-staging-juan auteco-staging-default
-            docker-compose up -d auteco-staging-juan auteco-staging-default
+            # Rebuild and restart staging container
+            docker-compose build --no-cache auteco-staging
+            docker-compose up -d auteco-staging
 
             # Clean up old images
             docker image prune -f

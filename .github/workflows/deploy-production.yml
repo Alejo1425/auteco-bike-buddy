@@ -34,9 +34,9 @@ jobs:
             git checkout master
             git pull origin master
 
-            # Rebuild and restart production containers
-            docker-compose build --no-cache auteco-juan auteco-default
-            docker-compose up -d auteco-juan auteco-default
+            # Rebuild and restart ALL production containers
+            docker-compose build --no-cache auteco-juan auteco-default auteco-alejandra auteco-miguel auteco-lorena auteco-nathalia
+            docker-compose up -d auteco-juan auteco-default auteco-alejandra auteco-miguel auteco-lorena auteco-nathalia
 
             # Clean up old images
             docker image prune -f
