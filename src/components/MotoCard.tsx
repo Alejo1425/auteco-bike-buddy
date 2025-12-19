@@ -2,14 +2,10 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Heart } from "lucide-react";
-import { useChatwoot } from "@/hooks/useChatwoot";
-import { useConversationId } from "@/hooks/useConversationId";
+import { MessageCircle, Eye } from "lucide-react";
 import { useAsesorContext } from "@/contexts";
-import { chatwootConfig } from "@/config/env";
-import { toast } from "sonner";
 import type { Moto } from "@/data/motos";
-import { enviarMensajeAConversacion, formatearMensajeMoto } from "@/services/chatwoot-api.service";
+import { appConfig } from "@/config/env";
 
 interface MotoCardProps {
   moto: Moto;
@@ -46,74 +42,6 @@ const getMarcaColor = (marca: string): string => {
 
 export function MotoCard({ moto, index }: MotoCardProps) {
   const { asesorActual } = useAsesorContext();
-  const { conversationId } = useConversationId();
-  const { isLoaded, openChatWithMoto } = useChatwoot({
-    websiteToken: chatwootConfig.websiteToken,
-    autoLoad: false, // No auto-cargar en cada card
-  });
-
-  const handleMeInteresa = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (!isLoaded) {
-      toast.error('El chat no está disponible en este momento');
-      return;
-    }
-
-    // Si hay un conversation ID, enviar mensaje directo a esa conversación via API
-    if (conversationId) {
-      try {
-        const mensaje = formatearMensajeMoto({
-          marca: moto.marca,
-          modelo: moto.modelo,
-          cuotaInicial: moto.cuotaInicial,
-          precioContado: moto.precioContado,
-          precio2026: moto.precio2026,
-        });
-
-        await enviarMensajeAConversacion(conversationId, mensaje);
-
-        // Mensaje de éxito
-        if (asesorActual) {
-          toast.success(
-            `¡Mensaje enviado a tu conversación con ${asesorActual.Aseror}! 💬`,
-            { duration: 5000 }
-          );
-        } else {
-          toast.success(
-            `¡Mensaje enviado! Tu asesor verá tu interés en la ${moto.marca} ${moto.modelo}`,
-            { duration: 5000 }
-          );
-        }
-      } catch (error) {
-        console.error('Error al enviar mensaje:', error);
-        toast.error('No se pudo enviar el mensaje. Por favor intenta de nuevo.');
-      }
-    } else {
-      // No hay conversation ID - usar el método tradicional con el widget
-      openChatWithMoto(moto.modelo, moto.marca, {
-        marca: moto.marca,
-        modelo: moto.modelo,
-        cuotaInicial: moto.cuotaInicial,
-        precioContado: moto.precioContado,
-        precio2026: moto.precio2026,
-      });
-
-      // Mostrar mensaje de confirmación
-      if (asesorActual) {
-        toast.success(
-          `¡Mensaje enviado! ${asesorActual.Aseror} verá tu interés en la ${moto.marca} ${moto.modelo}`,
-          { duration: 5000 }
-        );
-      } else {
-        toast.success(
-          `${moto.marca} ${moto.modelo} agregada ✓ Abre el chat en la esquina para más información`,
-          { duration: 5000 }
-        );
-      }
-    }
-  };
 
   // Obtener el teléfono del asesor actual o usar el predeterminado
   const whatsappNumber = asesorActual?.Phone || appConfig.defaultWhatsapp;
@@ -171,24 +99,28 @@ export function MotoCard({ moto, index }: MotoCardProps) {
 
         <div className="flex gap-2 mt-4">
           {asesorActual ? (
-            // Catálogo personalizado - Solo mostrar botón de Chatwoot
+            // Catálogo personalizado - Solo mostrar botón de Detalles
             <Button
-              onClick={handleMeInteresa}
+              asChild
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold gap-2"
             >
-              <Heart className="w-4 h-4" />
-              {conversationId ? 'Me interesa - Continuar con el proceso' : `Me interesa - Hablar con ${asesorActual.Aseror}`}
+              <Link to={`/moto/${moto.id}`}>
+                <Eye className="w-4 h-4" />
+                Ver más detalles
+              </Link>
             </Button>
           ) : (
             // Catálogo general - Mostrar ambos botones
             <>
               <Button
-                onClick={handleMeInteresa}
+                asChild
                 variant="outline"
                 className="flex-1 border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground font-heading font-semibold gap-2"
               >
-                <Heart className="w-4 h-4" />
-                Me interesa
+                <Link to={`/moto/${moto.id}`}>
+                  <Eye className="w-4 h-4" />
+                  Ver detalles
+                </Link>
               </Button>
 
               <Button
