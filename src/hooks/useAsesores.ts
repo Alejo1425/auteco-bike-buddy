@@ -280,7 +280,7 @@ export function useAsesor(slug: string | undefined) {
 
         if (data) {
           setAsesor(data);
-          console.log('✅ Asesor cargado:', data.Aseror);
+          console.log('✅ Asesor cargado:', data.Asesor);
         } else {
           setError('Asesor no encontrado');
         }

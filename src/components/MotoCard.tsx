@@ -45,7 +45,7 @@ export function MotoCard({ moto, index }: MotoCardProps) {
 
   // Obtener el teléfono del asesor actual o usar el predeterminado
   const whatsappNumber = asesorActual?.Phone || appConfig.defaultWhatsapp;
-  const asesorNombre = asesorActual?.Aseror || 'tu asesor';
+  const asesorNombre = asesorActual?.Asesor || 'tu asesor';
 
   return (
     <Card

@@ -26,6 +26,7 @@
 
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import type { Asesor } from '@/types';
+import { getNombreAsesor } from '@/types/asesor';
 
 /**
  * 🎓 CONCEPTO: Definir el tipo del contexto
@@ -76,7 +77,15 @@ export function AsesorProvider({ children }: AsesorProviderProps) {
    * Memorizamos la función para que no se recree en cada render
    */
   const seleccionarAsesor = useCallback((asesor: Asesor) => {
-    console.log('🎯 Asesor seleccionado:', asesor.Aseror);
+    const nombre = getNombreAsesor(asesor);
+
+    // Validar que el asesor tenga nombre antes de seleccionarlo
+    if (!nombre) {
+      console.error('⚠️ Intento de seleccionar asesor sin nombre:', asesor);
+      return;
+    }
+
+    console.log('🎯 Asesor seleccionado:', nombre);
     setAsesorActual(asesor);
 
     // 🎓 CONCEPTO: Persistencia opcional
@@ -137,7 +146,7 @@ export function AsesorProvider({ children }: AsesorProviderProps) {
  *   return (
  *     <div>
  *       {asesorActual ? (
- *         <p>Asesor: {asesorActual.Aseror}</p>
+ *         <p>Asesor: {asesorActual.Asesor}</p>
  *       ) : (
  *         <p>No hay asesor seleccionado</p>
  *       )}

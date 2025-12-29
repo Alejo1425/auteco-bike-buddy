@@ -247,24 +247,13 @@ export interface ConsultarMotosOptions {
  */
 export const CATEGORIA_MAP: Record<string, MotoLegacy['categoria']> = {
   'Trabajo': 'trabajo',
-  'trabajo': 'trabajo',
   'Sport': 'sport',
-  'sport': 'sport',
   'Automatica': 'automatica',
-  'automatica': 'automatica',
-  'Semi Automatica': 'semi-automatica',
-  'Semi-Automatica': 'semi-automatica',
-  'semi-automatica': 'semi-automatica',
+  'Semi-automatica': 'semi-automatica',
   'Deportiva': 'deportiva',
-  'deportiva': 'deportiva',
   'Todo Terreno': 'todo-terreno',
-  'Todo-Terreno': 'todo-terreno',
-  'todo-terreno': 'todo-terreno',
   'Tricargo': 'tricargo',
-  'tricargo': 'tricargo',
-  'Alta Gama': 'alta-gama',
-  'Alta-Gama': 'alta-gama',
-  'alta-gama': 'alta-gama',
+  'Alta-gama': 'alta-gama',
 };
 
 /**
@@ -272,16 +261,9 @@ export const CATEGORIA_MAP: Record<string, MotoLegacy['categoria']> = {
  */
 export const MARCA_MAP: Record<string, MotoLegacy['marca']> = {
   'Tvs': 'TVS',
-  'TVS': 'TVS',
-  'tvs': 'TVS',
   'Victory': 'Victory',
-  'victory': 'Victory',
   'Kymco': 'Kymco',
-  'kymco': 'Kymco',
   'Benelli': 'Benelli',
-  'benelli': 'Benelli',
   'Ceronte': 'Ceronte',
-  'ceronte': 'Ceronte',
   'Zontes': 'Zontes',
-  'zontes': 'Zontes',
 };

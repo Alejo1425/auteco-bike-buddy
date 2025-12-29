@@ -133,7 +133,7 @@ export default function TestAsesoresV2() {
             className="border rounded-lg p-4 hover:shadow-lg transition-all hover:scale-105"
           >
             {/* Nombre */}
-            <h3 className="text-lg font-semibold mb-2">{asesor.Aseror}</h3>
+            <h3 className="text-lg font-semibold mb-2">{asesor.Asesor}</h3>
 
             {/* Info */}
             <div className="space-y-1 text-sm text-gray-600">

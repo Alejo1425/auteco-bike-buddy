@@ -289,7 +289,7 @@ export default function GestionAsesores() {
                     {/* Información del asesor */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-1">
-                        <p className="font-semibold text-lg">{asesor.Aseror}</p>
+                        <p className="font-semibold text-lg">{asesor.Asesor}</p>
                         <span className={`text-xs font-medium px-2 py-1 rounded-full ${estadoInfo.color}`}>
                           {estadoInfo.label}
                         </span>
@@ -320,7 +320,7 @@ export default function GestionAsesores() {
                             {appConfig.url}/{asesor.slug}
                           </a>
                           <Button
-                            onClick={() => copiarURLCatalogo(asesor.slug!, asesor.Aseror)}
+                            onClick={() => copiarURLCatalogo(asesor.slug!, asesor.Asesor)}
                             variant="ghost"
                             size="sm"
                             className="h-6 px-2"
@@ -337,7 +337,7 @@ export default function GestionAsesores() {
                     {asesor.Activo === 1 && (
                       <>
                         <Button
-                          onClick={() => handleDesactivar(asesor.Id, asesor.Aseror)}
+                          onClick={() => handleDesactivar(asesor.Id, asesor.Asesor)}
                           disabled={estaProcesando}
                           variant="outline"
                           size="sm"
@@ -346,7 +346,7 @@ export default function GestionAsesores() {
                           {estaProcesando ? '⏳' : '⏸️'} Desactivar
                         </Button>
                         <Button
-                          onClick={() => handleMarcarComoRetirado(asesor.Id, asesor.Aseror)}
+                          onClick={() => handleMarcarComoRetirado(asesor.Id, asesor.Asesor)}
                           disabled={estaProcesando}
                           variant="outline"
                           size="sm"
@@ -360,7 +360,7 @@ export default function GestionAsesores() {
                     {asesor.Activo === 0 && (
                       <>
                         <Button
-                          onClick={() => handleActivar(asesor.Id, asesor.Aseror)}
+                          onClick={() => handleActivar(asesor.Id, asesor.Asesor)}
                           disabled={estaProcesando}
                           variant="outline"
                           size="sm"
@@ -369,7 +369,7 @@ export default function GestionAsesores() {
                           {estaProcesando ? '⏳' : '▶️'} Activar
                         </Button>
                         <Button
-                          onClick={() => handleMarcarComoRetirado(asesor.Id, asesor.Aseror)}
+                          onClick={() => handleMarcarComoRetirado(asesor.Id, asesor.Asesor)}
                           disabled={estaProcesando}
                           variant="outline"
                           size="sm"
@@ -382,7 +382,7 @@ export default function GestionAsesores() {
 
                     {asesor.Activo === 2 && (
                       <Button
-                        onClick={() => handleActivar(asesor.Id, asesor.Aseror)}
+                        onClick={() => handleActivar(asesor.Id, asesor.Asesor)}
                         disabled={estaProcesando}
                         variant="outline"
                         size="sm"

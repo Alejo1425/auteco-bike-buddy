@@ -49,7 +49,7 @@ export class MotoService {
       categoria,
       cilindrada,
       soloDisponibles = false,
-      limit,
+      limit = 1000, // Default alto para obtener todas las motos (NocoDB por defecto usa 25)
       offset,
       orderBy = 'Productos_motos',
       orderDirection = 'ASC',
@@ -95,9 +95,8 @@ export class MotoService {
       params.where = whereClause;
     }
 
-    if (limit) {
-      params.limit = limit;
-    }
+    // Siempre incluir limit (ahora tiene default de 1000)
+    params.limit = limit;
 
     if (offset) {
       params.offset = offset;
@@ -353,7 +352,7 @@ export class MotoService {
 
     return {
       id,
-      modelo: moto.Productos_motos,
+      modelo: moto.Productos_motos || 'Modelo desconocido',
       marca: marcaLegacy,
       categoria: categoriaLegacy,
       precio2026: moto.Precio_comercial || 0,
@@ -368,13 +367,31 @@ export class MotoService {
    * Convierte lista de motos a formato legacy
    */
   static toLegacyFormatList(motos: MotoNocoDB[]): MotoLegacy[] {
-    return motos.map(moto => this.toLegacyFormat(moto));
+    return motos
+      .filter(moto => {
+        // Filtrar motos con datos esenciales faltantes
+        if (!moto.Productos_motos || !moto.Marca || !moto.Categoria) {
+          // Silenciar warnings en producción - solo log en desarrollo si es necesario
+          // console.warn('⚠️ Moto con datos incompletos omitida:', {
+          //   Id: moto.Id,
+          //   Productos_motos: moto.Productos_motos,
+          //   Marca: moto.Marca,
+          //   Categoria: moto.Categoria,
+          // });
+          return false;
+        }
+        return true;
+      })
+      .map(moto => this.toLegacyFormat(moto));
   }
 
   /**
    * Genera un slug URL-friendly desde un nombre
    */
-  private static generateSlug(nombre: string): string {
+  private static generateSlug(nombre: string | null | undefined): string {
+    if (!nombre) {
+      return 'moto-sin-nombre';
+    }
     return nombre
       .toLowerCase()
       .trim()

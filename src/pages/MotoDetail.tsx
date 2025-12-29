@@ -50,7 +50,7 @@ const getCategoriaLabel = (categoria: string): string => {
     'automatica': 'Automática',
     'deportiva': 'Deportiva',
     'todo-terreno': 'Todo Terreno',
-    'tricargo': 'Tricargo',
+    'ceronte': 'Ceronte',
     'alta-gama': 'Alta Gama'
   };
   return labels[categoria] || categoria;
@@ -117,7 +117,7 @@ const MotoDetail = () => {
         // Mensaje de éxito
         if (asesorActual) {
           toast.success(
-            `¡Mensaje enviado a tu conversación con ${asesorActual.Aseror}! 💬`,
+            `¡Mensaje enviado a tu conversación con ${asesorActual.Asesor}! 💬`,
             { duration: 5000 }
           );
         } else {
@@ -143,7 +143,7 @@ const MotoDetail = () => {
       // Mostrar mensaje de confirmación
       if (asesorActual) {
         toast.success(
-          `¡Mensaje enviado! ${asesorActual.Aseror} verá tu interés en la ${marca} ${modelo}`,
+          `¡Mensaje enviado! ${asesorActual.Asesor} verá tu interés en la ${marca} ${modelo}`,
           { duration: 5000 }
         );
       } else {
@@ -157,7 +157,7 @@ const MotoDetail = () => {
 
   // Obtener el teléfono del asesor actual o usar el predeterminado
   const whatsappNumber = asesorActual?.Phone || '3114319886';
-  const asesorNombre = asesorActual?.Aseror || 'tu asesor';
+  const asesorNombre = asesorActual?.Asesor || 'tu asesor';
 
   // Loading state
   if (isLoading) {
@@ -359,7 +359,7 @@ const MotoDetail = () => {
                 {asesorActual ? (
                   <>
                     <h3 className="font-heading font-bold text-xl text-foreground mb-2 text-center">
-                      {conversationId ? 'Continuar con el proceso' : `Habla con ${asesorActual.Aseror}`}
+                      {conversationId ? 'Continuar con el proceso' : `Habla con ${asesorActual.Asesor}`}
                     </h3>
                     <p className="text-sm text-muted-foreground font-body mb-4 text-center">
                       {conversationId ? 'Enviar mi interés a la conversación' : 'Continúa la conversación en el chat'}
@@ -371,7 +371,7 @@ const MotoDetail = () => {
                       className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-bold text-lg gap-3 py-6"
                     >
                       <Heart className="w-6 h-6" />
-                      {conversationId ? 'Me interesa - Continuar con el proceso' : `Haz que sea tuya ahora - Hablar con ${asesorActual.Aseror}`}
+                      {conversationId ? 'Me interesa - Continuar con el proceso' : `Haz que sea tuya ahora - Hablar con ${asesorActual.Asesor}`}
                     </Button>
                   </>
                 ) : (

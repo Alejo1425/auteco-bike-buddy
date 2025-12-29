@@ -103,7 +103,7 @@ export default function TestAsesores() {
           >
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-lg font-semibold">{asesor.Aseror}</h3>
+                <h3 className="text-lg font-semibold">{asesor.Asesor}</h3>
                 <p className="text-gray-600">📞 {asesor.Phone}</p>
                 {asesor.Email && (
                   <p className="text-gray-600">📧 {asesor.Email}</p>

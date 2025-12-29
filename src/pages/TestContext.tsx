@@ -57,7 +57,7 @@ function SelectorAsesores() {
               }`}
             >
               <div className="flex items-center justify-between">
-                <span>{asesor.Aseror}</span>
+                <span>{asesor.Asesor}</span>
                 {asesorActual?.Id === asesor.Id && (
                   <span className="text-blue-600">✓ Seleccionado</span>
                 )}
@@ -108,7 +108,7 @@ function DetallesAsesor() {
           {/* Nombre */}
           <div>
             <label className="text-sm font-medium text-gray-500">Nombre</label>
-            <p className="text-lg font-semibold">{asesorActual!.Aseror}</p>
+            <p className="text-lg font-semibold">{asesorActual!.Asesor}</p>
           </div>
 
           {/* Teléfono */}
@@ -189,7 +189,7 @@ function HeaderResumen() {
       <p className="text-blue-100">
         {hayAsesorSeleccionado ? (
           <>
-            Asesor seleccionado: <strong>{asesorActual!.Aseror}</strong>
+            Asesor seleccionado: <strong>{asesorActual!.Asesor}</strong>
           </>
         ) : (
           'Ningún asesor seleccionado'
@@ -308,7 +308,7 @@ function GestionarAsesores() {
 
                   {/* Información del asesor */}
                   <div>
-                    <p className="font-semibold">{asesor.Aseror}</p>
+                    <p className="font-semibold">{asesor.Asesor}</p>
                     <p className="text-sm text-gray-600">{asesor.Phone}</p>
                   </div>
                 </div>
@@ -329,7 +329,7 @@ function GestionarAsesores() {
                   {/* Botón */}
                   {estaActivo ? (
                     <Button
-                      onClick={() => handleDesactivar(asesor.Id, asesor.Aseror)}
+                      onClick={() => handleDesactivar(asesor.Id, asesor.Asesor)}
                       disabled={estaProcesando}
                       variant="outline"
                       size="sm"
@@ -339,7 +339,7 @@ function GestionarAsesores() {
                     </Button>
                   ) : (
                     <Button
-                      onClick={() => handleActivar(asesor.Id, asesor.Aseror)}
+                      onClick={() => handleActivar(asesor.Id, asesor.Asesor)}
                       disabled={estaProcesando}
                       variant="outline"
                       size="sm"
@@ -387,8 +387,8 @@ export default function TestContext() {
   // Configurar Chatwoot cuando cambia el asesor
   useEffect(() => {
     if (isLoaded && asesorActual) {
-      setAsesor(asesorActual.Aseror, asesorActual.Id);
-      console.log(`✅ Chatwoot configurado para: ${asesorActual.Aseror}`);
+      setAsesor(asesorActual.Asesor, asesorActual.Id);
+      console.log(`✅ Chatwoot configurado para: ${asesorActual.Asesor}`);
     }
   }, [isLoaded, asesorActual, setAsesor]);
 
@@ -428,7 +428,7 @@ export default function TestContext() {
             </p>
             {asesorActual && isLoaded && (
               <p className="mt-1">
-                Configurado para: <strong>{asesorActual.Aseror}</strong>
+                Configurado para: <strong>{asesorActual.Asesor}</strong>
               </p>
             )}
           </div>

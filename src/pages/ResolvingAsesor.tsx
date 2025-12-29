@@ -31,7 +31,7 @@ export default function ResolvingAsesor() {
 
                 if (asesor && asesor.slug) {
                     const targetUrl = `/${asesor.slug}${location.search}`;
-                    console.log(`✅ Asesor encontrado: ${asesor.Aseror} -> ${targetUrl}`);
+                    console.log(`✅ Asesor encontrado: ${asesor.Asesor} -> ${targetUrl}`);
                     // Mantener los query params (ej: ?cid=123)
                     navigate(targetUrl, { replace: true });
                 } else {

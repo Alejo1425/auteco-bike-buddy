@@ -43,11 +43,8 @@ export interface Asesor {
   /**
    * Nombre del asesor
    * Ejemplo: "Alejandra", "Miguel"
-   *
-   * 🎓 NOTA: En NocoDB está como "Aseror" (typo),
-   * pero lo mantenemos así para que coincida con la BD
    */
-  Aseror: string;
+  Asesor: string;
 
   /**
    * Número de teléfono
@@ -173,17 +170,24 @@ export interface NocoDBResponse<T> {
 }
 
 /**
+ * Helper para obtener el nombre del asesor
+ */
+export function getNombreAsesor(asesor: Asesor): string {
+  return asesor.Asesor || '';
+}
+
+/**
  * 🎓 EJEMPLO DE USO:
  *
  * ```typescript
  * // Obtener un asesor
  * const asesor: Asesor = await getAsesor('alejandra');
- * console.log(asesor.Aseror); // ✅ TypeScript sabe que existe
+ * console.log(asesor.Asesor); // ✅ TypeScript sabe que existe
  * console.log(asesor.nombre); // ❌ Error: campo no existe
  *
  * // Crear un asesor nuevo
  * const nuevoAsesor: CrearAsesorDTO = {
- *   Aseror: 'Pedro',
+ *   Asesor: 'Pedro',
  *   Phone: '3001234567',
  *   Email: 'pedro@ejemplo.com',
  *   slug: 'pedro',

@@ -17,6 +17,7 @@ import { useConversationId } from '@/hooks/useConversationId';
 import { useAsesorContext } from '@/contexts';
 import { chatwootConfig } from '@/config/env';
 import type { Asesor } from '@/types';
+import { getNombreAsesor } from '@/types/asesor';
 import Index from './Index';
 
 export default function AsesorCatalogo() {
@@ -49,27 +50,43 @@ export default function AsesorCatalogo() {
 
       try {
         setLoading(true);
+        console.log('🔍 Buscando asesor con slug:', slug);
         const asesorEncontrado = await AsesorService.getBySlug(slug);
 
+        console.log('📊 Asesor encontrado:', asesorEncontrado);
+
         if (!asesorEncontrado) {
+          console.error('❌ No se encontró asesor con slug:', slug);
           setError('Asesor no encontrado');
+          setLoading(false);
+          return;
+        }
+
+        // Validar que el asesor tenga nombre
+        const nombreAsesor = getNombreAsesor(asesorEncontrado);
+        if (!nombreAsesor) {
+          console.error('⚠️ El asesor no tiene nombre definido:', asesorEncontrado);
+          console.error('Campos disponibles:', Object.keys(asesorEncontrado));
+          setError('Error en la configuración del asesor - Falta el nombre en NocoDB');
           setLoading(false);
           return;
         }
 
         // Verificar que el asesor esté activo
         if (asesorEncontrado.Activo !== 1) {
+          console.error('⚠️ Asesor inactivo. Estado:', asesorEncontrado.Activo);
           setError('Este asesor no está disponible actualmente');
           setLoading(false);
           return;
         }
 
+        console.log('✅ Asesor válido, cargando catálogo...');
         setAsesor(asesorEncontrado);
         // Setear el asesor en el contexto global para que otros componentes lo usen
         seleccionarAsesor(asesorEncontrado);
         setLoading(false);
       } catch (err) {
-        console.error('Error al cargar asesor:', err);
+        console.error('❌ Error al cargar asesor:', err);
         setError('Error al cargar el asesor');
         setLoading(false);
       }
@@ -81,8 +98,9 @@ export default function AsesorCatalogo() {
   // Configurar Chatwoot cuando el asesor carga y Chatwoot está listo
   useEffect(() => {
     if (isLoaded && asesor) {
-      setChatwootAsesor(asesor.Aseror, asesor.Id);
-      console.log(`✅ Catálogo cargado para: ${asesor.Aseror} (/${slug})`);
+      const nombreAsesor = getNombreAsesor(asesor);
+      setChatwootAsesor(nombreAsesor, asesor.Id);
+      console.log(`✅ Catálogo cargado para: ${nombreAsesor} (/${slug})`);
     }
   }, [isLoaded, asesor, slug, setChatwootAsesor]);
 
@@ -111,10 +129,10 @@ export default function AsesorCatalogo() {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl font-bold">
-              {asesor.Aseror.charAt(0).toUpperCase()}
+              {getNombreAsesor(asesor).charAt(0).toUpperCase() || '?'}
             </div>
             <div>
-              <h2 className="text-xl font-bold">{asesor.Aseror}</h2>
+              <h2 className="text-xl font-bold">{getNombreAsesor(asesor) || 'Asesor'}</h2>
               <p className="text-sm text-white/80">Tu asesor personal de motos</p>
             </div>
           </div>

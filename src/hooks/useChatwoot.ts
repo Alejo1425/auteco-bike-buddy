@@ -44,7 +44,7 @@ interface UseChatwootOptions {
  *   });
  *
  *   const handleSelectAsesor = (asesor: Asesor) => {
- *     setAsesor(asesor.Aseror, asesor.Id);
+ *     setAsesor(asesor.Asesor, asesor.Id);
  *     openChat();
  *   };
  *
@@ -87,6 +87,12 @@ export function useChatwoot(options: UseChatwootOptions) {
   const setAsesor = useCallback((nombre: string, id: number) => {
     if (!isLoaded) {
       console.warn('⚠️ Chatwoot no está cargado aún');
+      return;
+    }
+
+    // Validar que el nombre no esté vacío
+    if (!nombre || nombre.trim() === '') {
+      console.error('⚠️ Intento de configurar asesor sin nombre. ID:', id);
       return;
     }
 
@@ -263,14 +269,14 @@ export function useChatwoot(options: UseChatwootOptions) {
  *
  *   useEffect(() => {
  *     if (isLoaded && asesorActual) {
- *       setAsesor(asesorActual.Aseror, asesorActual.Id);
+ *       setAsesor(asesorActual.Asesor, asesorActual.Id);
  *     }
  *   }, [isLoaded, asesorActual, setAsesor]);
  *
  *   return (
  *     <div>
  *       <button onClick={openChat}>
- *         Chatear con {asesorActual?.Aseror}
+ *         Chatear con {asesorActual?.Asesor}
  *       </button>
  *     </div>
  *   );

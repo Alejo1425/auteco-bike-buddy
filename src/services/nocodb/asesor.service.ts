@@ -85,7 +85,7 @@ export class AsesorService {
    * ```ts
    * const asesor = await AsesorService.getBySlug('alejandra');
    * if (asesor) {
-   *   console.log(asesor.Aseror); // "Alejandra"
+   *   console.log(asesor.Asesor); // "Alejandra"
    * }
    * ```
    */
@@ -151,13 +151,13 @@ export class AsesorService {
    */
   static async create(data: CrearAsesorDTO): Promise<Asesor> {
     // Validaciones básicas
-    if (!data.Aseror || !data.Phone) {
+    if (!data.Asesor || !data.Phone) {
       throw new Error('Nombre y teléfono son requeridos');
     }
 
     // Si no hay slug, generarlo del nombre
     if (!data.slug) {
-      data.slug = this.generateSlug(data.Aseror);
+      data.slug = this.generateSlug(data.Asesor);
     }
 
     // Verificar que el slug no exista
@@ -330,7 +330,7 @@ export class AsesorService {
 
     // NocoDB usa 'like' para búsqueda parcial
     // '%' es wildcard (cualquier cosa)
-    const whereClause = `(Aseror,like,%${query}%)`;
+    const whereClause = `(Asesor,like,%${query}%)`;
 
     const response = await NocoDBClient.get<NocoDBResponse<Asesor>>(
       `${TABLE_ID}/records`,
@@ -375,13 +375,13 @@ export class AsesorService {
 
     // 4. Búsqueda exacta por nombre (case insensitive)
     const exactMatch = allActive.find(
-      a => a.Aseror.toLowerCase() === cleanId.toLowerCase()
+      a => a.Asesor.toLowerCase() === cleanId.toLowerCase()
     );
     if (exactMatch) return exactMatch;
 
     // 5. Búsqueda parcial (contiene el texto)
     const partialMatches = allActive.filter(
-      a => a.Aseror.toLowerCase().includes(cleanId.toLowerCase())
+      a => a.Asesor.toLowerCase().includes(cleanId.toLowerCase())
     );
 
     if (partialMatches.length === 1) {
@@ -392,7 +392,7 @@ export class AsesorService {
     // intentamos ver si alguna empieza exactamente con el identificador
     if (partialMatches.length > 1) {
       const startMatches = partialMatches.filter(
-        a => a.Aseror.toLowerCase().startsWith(cleanId.toLowerCase())
+        a => a.Asesor.toLowerCase().startsWith(cleanId.toLowerCase())
       );
       if (startMatches.length === 1) {
         return startMatches[0];
