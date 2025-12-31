@@ -138,7 +138,7 @@ export class ChatwootAPIService {
         body: JSON.stringify({
           content: mensaje,
           message_type: 'outgoing', // 'outgoing' = mensaje desde asesor
-          private: private_message,
+          private: false,
         }),
       });
 
