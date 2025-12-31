@@ -12,8 +12,8 @@ import { chatwootConfig } from '@/config/env';
  */
 interface MessagePayload {
   content: string;
-  message_type?: 'outgoing' | 'incoming';
-  private?: boolean;
+  message_type?: 'outgoing';
+  private?: false;
 }
 
 /**
@@ -47,7 +47,7 @@ export async function enviarMensajeAConversacion(
 
   const payload: MessagePayload = {
     content: message,
-    message_type: 'incoming', // El mensaje viene del cliente
+    message_type: 'outgoing', // El mensaje viene del asesor
     private: false,
   };
 
