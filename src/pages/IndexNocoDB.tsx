@@ -134,7 +134,7 @@ const Index = () => {
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-heading font-bold text-2xl text-foreground">
               {filteredMotos.length}{" "}
-              {filteredMotos.length === 1 ? "moto encontrada" : "motos encontradas"}
+              {filteredMotos.length  == 1 ? "moto encontrada" : "motos encontradas"}
             </h3>
 
             {/* Botón de sincronización manual */}

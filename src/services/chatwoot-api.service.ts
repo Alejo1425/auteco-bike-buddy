@@ -51,7 +51,6 @@ export async function enviarMensajeAConversacion(
     private: false,
   };
 
-  console.log(`📤 Enviando mensaje a conversación ${conversationId}...`);
 
   try {
     const response = await fetch(url, {
@@ -72,7 +71,6 @@ export async function enviarMensajeAConversacion(
     }
 
     const data: MessageResponse = await response.json();
-    console.log('✅ Mensaje enviado exitosamente a conversación', conversationId);
     return data;
   } catch (error) {
     console.error('❌ Error al enviar mensaje a conversación:', error);
