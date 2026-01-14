@@ -113,10 +113,16 @@ export function formatearMensajeMoto(detalles: {
   cuotaInicial?: number;
   precioContado?: number;
   precio2026?: number;
+  year?: '2026' | '2027';
 }): string {
-  const { marca, modelo, cuotaInicial, precioContado, precio2026 } = detalles;
+  const { marca, modelo, cuotaInicial, precioContado, precio2026, year = '2026' } = detalles;
 
   let mensaje = `🏍️ Me interesa la ${marca} ${modelo}`;
+
+  // Agregar año del modelo si está disponible
+  if (year) {
+    mensaje += ` (Modelo ${year})`;
+  }
 
   if (cuotaInicial || precioContado || precio2026) {
     mensaje += '\n\n📊 Información:';
@@ -130,7 +136,7 @@ export function formatearMensajeMoto(detalles: {
     }
 
     if (precio2026) {
-      mensaje += `\n📅 Precio 2026: ${formatearPrecio(precio2026)}`;
+      mensaje += `\n📅 Precio comercial: ${formatearPrecio(precio2026)}`;
     }
   }
 
