@@ -108,6 +108,19 @@ export function MotoCard({ moto, index, rawData }: MotoCardProps) {
               {moto.cilindrada}
             </Badge>
           )}
+          {/* Badge de Año Modelo - Siempre visible */}
+          {rawData && (
+            <Badge
+              className={cn(
+                "absolute bottom-3 left-3 font-heading font-bold text-sm px-3 py-1",
+                selectedYear === '2027'
+                  ? "bg-emerald-600 text-white"
+                  : "bg-indigo-600 text-white"
+              )}
+            >
+              Modelo {selectedYear}
+            </Badge>
+          )}
         </div>
       </Link>
 
@@ -150,12 +163,10 @@ export function MotoCard({ moto, index, rawData }: MotoCardProps) {
           </div>
         )}
 
-        {/* Indicador de año cuando no hay selector */}
+        {/* Indicador de año cuando no hay precio 2027 - Sin selector */}
         {rawData && !hasPrecio2027 && (
-          <div className="mb-3">
-            <Badge variant="outline" className="text-xs">
-              Modelo 2026
-            </Badge>
+          <div className="mb-3 text-center">
+            <span className="text-xs text-muted-foreground">Solo disponible modelo 2026</span>
           </div>
         )}
 
