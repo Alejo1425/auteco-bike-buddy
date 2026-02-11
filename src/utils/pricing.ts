@@ -24,6 +24,8 @@ export interface PreciosCalculados {
   contado: number | null;
   /** Cuota inicial (10% comercial + trámite prenda) */
   inicial: number | null;
+  /** Porcentaje aplicado para la cuota inicial (ej: 0.10 o 0.15) */
+  porcentaje: number;
   /** Si hay precio disponible para el año */
   disponible: boolean;
 }
@@ -91,8 +93,8 @@ export const calcularPrecios = (
   const precioBase = cleanNumber(
     year === '2027'
       ? (moto as Record<string, unknown>)['Precio comercial 2027'] ||
-        (moto as Record<string, unknown>)['Precio_comercial_2027'] ||
-        (moto as MotoNocoDB).Precio_comercial // Fallback a 2026 si no hay 2027
+      (moto as Record<string, unknown>)['Precio_comercial_2027'] ||
+      (moto as MotoNocoDB).Precio_comercial // Fallback a 2026 si no hay 2027
       : (moto as MotoNocoDB).Precio_comercial
   );
 
@@ -108,6 +110,7 @@ export const calcularPrecios = (
         comercial: null,
         contado: null,
         inicial: null,
+        porcentaje: 0.10, // Default percentage
         disponible: false,
       };
     }
@@ -119,6 +122,7 @@ export const calcularPrecios = (
       comercial: null,
       contado: null,
       inicial: null,
+      porcentaje: 0.10, // Default percentage
       disponible: false,
     };
   }
@@ -127,11 +131,16 @@ export const calcularPrecios = (
   const transitoContado = cleanNumber((moto as MotoNocoDB).vueltas_transito_de_contado);
   const transitoPrenda = cleanNumber((moto as MotoNocoDB).vueltas_transito_con_prenda);
 
+  // Identificar si es Tricargo 200 para aplicar 15%
+  const modelo = String((moto as MotoNocoDB).Productos_motos || (moto as any).Modelo || "").toUpperCase();
+  const porcentaje = modelo.includes("TRICARGO 200") ? 0.15 : 0.10;
+
   // Calcular precios
   return {
     comercial: precioBase,
     contado: precioBase + transitoContado,
-    inicial: Math.round(precioBase * 0.10) + transitoPrenda,
+    inicial: Math.round(precioBase * porcentaje) + transitoPrenda,
+    porcentaje,
     disponible: true,
   };
 };

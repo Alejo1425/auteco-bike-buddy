@@ -62,6 +62,7 @@ export function MotoCard({ moto, index, rawData }: MotoCardProps) {
       comercial: moto.precio2026,
       contado: moto.precioContado,
       inicial: moto.cuotaInicial,
+      porcentaje: 0.10,
       disponible: true,
     };
   }, [rawData, selectedYear, moto]);
@@ -172,7 +173,20 @@ export function MotoCard({ moto, index, rawData }: MotoCardProps) {
 
         <div className={cn("space-y-3", !precios.disponible && "opacity-50")}>
           <div className="flex justify-between items-center py-2 border-b border-border/50">
-            <span className="text-sm text-muted-foreground font-body">Cuota Inicial:</span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm text-muted-foreground font-body">Cuota Inicial:</span>
+              <Badge
+                variant="secondary"
+                className={cn(
+                  "text-[10px] px-1 py-0 h-4 font-bold border-none",
+                  precios.porcentaje === 0.15
+                    ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+                    : "bg-muted text-muted-foreground"
+                )}
+              >
+                {Math.round(precios.porcentaje * 100)}%
+              </Badge>
+            </div>
             <span className="font-heading font-bold text-primary text-lg">
               {precios.disponible ? formatPrice(precios.inicial) : '-'}
             </span>

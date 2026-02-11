@@ -381,7 +381,20 @@ const MotoDetail = () => {
                 <div className={cn("space-y-4", !preciosDinamicos?.disponible && "opacity-50")}>
                   {preciosDinamicos?.inicial && (
                     <div className="flex justify-between items-center py-3 border-b border-border/50">
-                      <span className="text-muted-foreground font-body">Cuota Inicial:</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-muted-foreground font-body">Cuota Inicial:</span>
+                        <Badge
+                          variant="secondary"
+                          className={cn(
+                            "text-xs px-2 py-0 h-5 font-bold border-none",
+                            preciosDinamicos.porcentaje === 0.15
+                              ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+                              : "bg-muted text-muted-foreground"
+                          )}
+                        >
+                          {Math.round(preciosDinamicos.porcentaje * 100)}% de inicial
+                        </Badge>
+                      </div>
                       <span className="font-heading font-bold text-primary text-2xl">
                         {formatPriceDynamic(preciosDinamicos.inicial)}
                       </span>
